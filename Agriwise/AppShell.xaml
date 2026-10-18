@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Agriwise.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Agriwise.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.TabBarBackgroundColor="White"
+    Shell.TabBarForegroundColor="#103723"
+    Shell.TabBarUnselectedColor="#7A8F82"
+    Shell.TabBarTitleColor="#103723"
+    Title="AgriWise">
+
+    <!-- Main Navigation TabBar with Professional Icons -->
+    <TabBar>
+        <Tab Title="Accueil" Icon="ic_home.png">
+            <ShellContent
+                Title="Accueil"
+                ContentTemplate="{DataTemplate views:DashboardPage}"
+                Route="DashboardPage" />
+        </Tab>
+
+        <Tab Title="Journal" Icon="ic_book.png">
+            <ShellContent
+                Title="Journal"
+                ContentTemplate="{DataTemplate views:JournalPage}"
+                Route="JournalPage" />
+        </Tab>
+
+        <Tab Title="Guide Santé" Icon="ic_shield.png">
+            <ShellContent
+                Title="Guide Santé"
+                ContentTemplate="{DataTemplate views:HealthGuidePage}"
+                Route="HealthGuidePage" />
+        </Tab>
+
+        <Tab Title="Exploitation" Icon="ic_chart.png">
+            <ShellContent
+                Title="Exploitation"
+                ContentTemplate="{DataTemplate views:FinancesPage}"
+                Route="FinancesPage" />
+        </Tab>
+    </TabBar>
+
+</Shell>
