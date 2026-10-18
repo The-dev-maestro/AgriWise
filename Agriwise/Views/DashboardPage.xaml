@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Agriwise.Views.DashboardPage"
+             BackgroundColor="#F5F8F5"
+             Title="Accueil">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="16" Padding="16,18,16,24">
+            
+            <!-- Top Status Bar Chips -->
+            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" VerticalOptions="Center">
+                <Border Grid.Column="0" StrokeShape="RoundRectangle 16" BackgroundColor="#EAF1EB" StrokeThickness="0" Padding="10,6">
+                    <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                        <Image Source="ic_location.png" WidthRequest="14" HeightRequest="14" VerticalOptions="Center"/>
+                        <Label Text="Foumbot, Ouest • 26°C" FontSize="11" TextColor="#103723" FontFamily="OpenSansSemibold" LineBreakMode="TailTruncation"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Border Grid.Column="1" StrokeShape="RoundRectangle 16" BackgroundColor="#E0F5DD" StrokeThickness="0" Padding="10,6">
+                    <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                        <BoxView Color="#27AE60" CornerRadius="4" WidthRequest="7" HeightRequest="7" VerticalOptions="Center"/>
+                        <Label Text="Hors-Ligne" FontSize="11" TextColor="#165B32" FontFamily="OpenSansSemibold"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Border Grid.Column="2" StrokeShape="RoundRectangle 18" BackgroundColor="#EAF1EB" StrokeThickness="0" WidthRequest="36" HeightRequest="36">
+                    <ImageButton Source="ic_bell.png" WidthRequest="18" HeightRequest="18" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent" Clicked="OnNotificationsClicked"/>
+                </Border>
+            </Grid>
+
+            <!-- URGENT DAR ALERT BANNER -->
+            <Border StrokeShape="RoundRectangle 16" BackgroundColor="#FFF8F0" Stroke="#F5B041" StrokeThickness="1.5" Padding="16">
+                <VerticalStackLayout Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Border Grid.Column="0" StrokeShape="RoundRectangle 10" BackgroundColor="#E67E22" StrokeThickness="0" Padding="8,4" HorizontalOptions="Start">
+                            <HorizontalStackLayout Spacing="4">
+                                <Image Source="ic_alert.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
+                                <Label Text="DAR ACTIF — TOXICITÉ" FontSize="10" FontFamily="OpenSansSemibold" TextColor="White"/>
+                            </HorizontalStackLayout>
+                        </Border>
+                        <Label Grid.Column="1" Text="J-11 restant" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#D35400"/>
+                    </Grid>
+
+                    <Label Text="Délai Avant Récolte (DAR) actif sur Parcelle B — Tomates" FontSize="15" FontFamily="OpenSansSemibold" TextColor="#78281F"/>
+                    <Label Text="Traitement Fongicide appliqué il y a 3 jours. Récolte interdite pendant encore 11 jours pour éviter tout résidu toxique et protéger les consommateurs." FontSize="12" TextColor="#7E5109" LineHeight="1.2"/>
+
+                    <!-- Progress Indicator -->
+                    <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FDEBD0" StrokeThickness="0" Padding="10,8">
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                            <Label Grid.Row="0" Grid.Column="0" Text="Jour 3 / 14 — Dégradation active" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#935116"/>
+                            <Label Grid.Row="0" Grid.Column="1" Text="78% restant" FontSize="11" TextColor="#935116"/>
+                            <ProgressBar Grid.Row="1" Grid.ColumnSpan="2" Progress="0.22" ProgressColor="#E67E22" Margin="0,6,0,0"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Banner Actions -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,4,0,0">
+                        <Button Grid.Column="0" Text="Voir la parcelle" Clicked="OnOpenParcelBClicked" BackgroundColor="#E67E22" TextColor="White" FontSize="12" FontFamily="OpenSansSemibold" HeightRequest="38" CornerRadius="19"/>
+                        <Button Grid.Column="1" Text="Calculateur DAR" Clicked="OnOpenCalculatorClicked" BackgroundColor="#FDF2E9" TextColor="#A04000" BorderColor="#F5CBA7" BorderWidth="1" FontSize="12" FontFamily="OpenSansSemibold" HeightRequest="38" CornerRadius="19"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Quick Metrics 3-Cards Row -->
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                <Border Grid.Column="0" StrokeShape="RoundRectangle 12" BackgroundColor="White" Stroke="#E2EAE2" StrokeThickness="1" Padding="10,12">
+                    <VerticalStackLayout Spacing="3" HorizontalOptions="Center">
+                        <Label Text="3" FontSize="20" FontFamily="OpenSansSemibold" TextColor="#103723" HorizontalOptions="Center"/>
+                        <Label Text="Parcelles" FontSize="11" TextColor="#607266" HorizontalOptions="Center"/>
+                        <Label Text="4,2 ha total" FontSize="9" TextColor="#96A69B" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="1" StrokeShape="RoundRectangle 12" BackgroundColor="White" Stroke="#E2EAE2" StrokeThickness="1" Padding="10,12">
+                    <VerticalStackLayout Spacing="3" HorizontalOptions="Center">
+                        <Label Text="1" FontSize="20" FontFamily="OpenSansSemibold" TextColor="#27AE60" HorizontalOptions="Center"/>
+                        <Label Text="Prête à récolter" FontSize="11" TextColor="#607266" HorizontalOptions="Center"/>
+                        <Label Text="Cacao A" FontSize="9" TextColor="#27AE60" FontFamily="OpenSansSemibold" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="2" StrokeShape="RoundRectangle 12" BackgroundColor="White" Stroke="#E2EAE2" StrokeThickness="1" Padding="10,12">
+                    <VerticalStackLayout Spacing="3" HorizontalOptions="Center">
+                        <Label Text="1" FontSize="20" FontFamily="OpenSansSemibold" TextColor="#E67E22" HorizontalOptions="Center"/>
+                        <Label Text="En délai (DAR)" FontSize="11" TextColor="#607266" HorizontalOptions="Center"/>
+                        <Label Text="Tomates B" FontSize="9" TextColor="#E67E22" FontFamily="OpenSansSemibold" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- SECTION: Mes Parcelles & Interventions -->
+            <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                <Label Grid.Column="0" Text="Mes Parcelles &amp; Interventions" FontSize="16" FontFamily="OpenSansSemibold" TextColor="#103723" VerticalOptions="Center"/>
+                <Border Grid.Column="1" StrokeShape="RoundRectangle 14" BackgroundColor="#EAF1EB" StrokeThickness="0" Padding="10,6">
+                    <HorizontalStackLayout Spacing="4">
+                        <Image Source="ic_search.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
+                        <Label Text="Filtrer" FontSize="11" TextColor="#103723" FontFamily="OpenSansSemibold"/>
+                    </HorizontalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- PARCELLE A : Cacao -->
+            <Border StrokeShape="RoundRectangle 16" BackgroundColor="White" Stroke="#E2EAE2" StrokeThickness="1" Padding="14">
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="Parcelle A — Cacao" FontSize="15" FontFamily="OpenSansSemibold" TextColor="#103723"/>
+                            <Label Text="Secteur Ouest • Nord • Variété Forastero" FontSize="11" TextColor="#7D8F82"/>
+                        </VerticalStackLayout>
+                        <Border Grid.Column="1" StrokeShape="RoundRectangle 12" BackgroundColor="#E8F8F5" StrokeThickness="0" Padding="8,4">
+                            <HorizontalStackLayout Spacing="4">
+                                <Image Source="ic_check.png" WidthRequest="11" HeightRequest="11" VerticalOptions="Center"/>
+                                <Label Text="Récolte saine" FontSize="11" TextColor="#117A65" FontFamily="OpenSansSemibold"/>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </Grid>
+                    <Label Text="Dernier traitement : Fumier organique (14 Septembre). Zéro résidu toxique, conforme à l'export." FontSize="11" TextColor="#55695C"/>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="8" Margin="0,4,0,0">
+                        <Button Grid.Column="0" Text="Détails parcelle" Clicked="OnOpenParcelBClicked" BackgroundColor="#F0F5F1" TextColor="#103723" FontSize="11" HeightRequest="36" CornerRadius="18"/>
+                        <Button Grid.Column="1" Text="Journal récolte" Clicked="OnOpenJournalClicked" BackgroundColor="#103723" TextColor="White" FontSize="11" HeightRequest="36" CornerRadius="18"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- PARCELLE B : Tomate Maraîchère (Active DAR) -->
+            <Border StrokeShape="RoundRectangle 16" BackgroundColor="#FFFDF9" Stroke="#FAD7A0" StrokeThickness="1.5" Padding="14">
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="Parcelle B — Tomate Maraîchère" FontSize="15" FontFamily="OpenSansSemibold" TextColor="#78281F"/>
+                            <Label Text="0,8 ha • Planche irrigation 2 • Cobra F1" FontSize="11" TextColor="#7D8F82"/>
+                        </VerticalStackLayout>
+                        <Border Grid.Column="1" StrokeShape="RoundRectangle 12" BackgroundColor="#FDEBD0" StrokeThickness="0" Padding="8,4">
+                            <HorizontalStackLayout Spacing="4">
+                                <Image Source="ic_calendar.png" WidthRequest="11" HeightRequest="11" VerticalOptions="Center"/>
+                                <Label Text="En attente — 11j" FontSize="11" TextColor="#B9770E" FontFamily="OpenSansSemibold"/>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </Grid>
+
+                    <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FEF9E7" Stroke="#F9E79F" StrokeThickness="1" Padding="10,6">
+                        <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                            <Image Source="ic_flask.png" WidthRequest="14" HeightRequest="14" VerticalOptions="Center"/>
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Fongicide Mancozèbe (Dose 150g/pulvé)" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#7D6608"/>
+                                <Label Text="Délai avant récolte : 14 jours obligatoires. Jauge sécurité : Jour 3/14." FontSize="10" TextColor="#7D6608"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Border>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="8" Margin="0,4,0,0">
+                        <Button Grid.Column="0" Text="Vente bloquée" BackgroundColor="#FDEDEC" TextColor="#922B21" FontSize="11" HeightRequest="36" CornerRadius="18"/>
+                        <Button Grid.Column="1" Text="Ouvrir le Journal" Clicked="OnOpenParcelBClicked" BackgroundColor="#E67E22" TextColor="White" FontFamily="OpenSansSemibold" FontSize="11" HeightRequest="36" CornerRadius="18"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- PARCELLE C : Maïs Hybride -->
+            <Border StrokeShape="RoundRectangle 16" BackgroundColor="White" Stroke="#E2EAE2" StrokeThickness="1" Padding="14">
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="Parcelle C — Maïs Hybride" FontSize="15" FontFamily="OpenSansSemibold" TextColor="#103723"/>
+                            <Label Text="1,2 ha • Versant Sud • CMS 8704" FontSize="11" TextColor="#7D8F82"/>
+                        </VerticalStackLayout>
+                        <Border Grid.Column="1" StrokeShape="RoundRectangle 12" BackgroundColor="#EAFAF1" StrokeThickness="0" Padding="8,4">
+                            <Label Text="Stade Floraison" FontSize="11" TextColor="#196F3D" FontFamily="OpenSansSemibold"/>
+                        </Border>
+                    </Grid>
+                    <Label Text="Action conseillée : Prochain sarclage manuel dans 4 jours avant l'épiaison finale." FontSize="11" TextColor="#55695C"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Dedicated Advisor Banner -->
+            <Border StrokeShape="RoundRectangle 16" BackgroundColor="#103723" Padding="16">
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                    <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                        <Label Text="Conseiller Agricole Dédié" FontSize="14" FontFamily="OpenSansSemibold" TextColor="White"/>
+                        <Label Text="Centre Polyvalent de Foumbot • En ligne" FontSize="11" TextColor="#A3C7AF"/>
+                    </VerticalStackLayout>
+                    <Button Grid.Row="0" Grid.Column="1" Text="Appeler" Clicked="OnCallAdvisorClicked" BackgroundColor="#27AE60" TextColor="White" FontSize="12" FontFamily="OpenSansSemibold" HeightRequest="36" CornerRadius="18" Padding="14,0"/>
+                    
+                    <Grid Grid.Row="1" Grid.ColumnSpan="2" ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,14,0,0">
+                        <Button Grid.Column="0" Text="Noter Travail" Clicked="OnOpenJournalClicked" BackgroundColor="#1E4D36" TextColor="White" FontSize="11" HeightRequest="36" CornerRadius="18"/>
+                        <Button Grid.Column="1" Text="Calculer Traitement" Clicked="OnOpenCalculatorClicked" BackgroundColor="#86EF7D" TextColor="#0B2317" FontFamily="OpenSansSemibold" FontSize="11" HeightRequest="36" CornerRadius="18"/>
+                    </Grid>
+                </Grid>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
