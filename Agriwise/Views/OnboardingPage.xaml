@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage Shell.NavBarIsVisible="False" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Agriwise.Views.OnboardingPage"
+             BackgroundColor="#0B2317"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <Grid RowDefinitions="*,Auto" Padding="24,40,24,32">
+            <!-- Background Decorative Glow -->
+            <BoxView Grid.Row="0" Grid.RowSpan="2" Color="#133D29" CornerRadius="200" WidthRequest="320" HeightRequest="320" HorizontalOptions="Center" VerticalOptions="Start" Opacity="0.4" Margin="0,-60,0,0" />
+
+            <!-- Main Content Container -->
+            <VerticalStackLayout Grid.Row="0" Spacing="24" VerticalOptions="Center">
+                
+                <!-- Status Badge -->
+                <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" BackgroundColor="#1E4D36" HorizontalOptions="Center" Padding="14,6">
+                    <HorizontalStackLayout Spacing="8">
+                        <Image Source="ic_shield.png" WidthRequest="14" HeightRequest="14" VerticalOptions="Center"/>
+                        <Label Text="AgriWise v1.0 • Ouest Cameroun" FontSize="12" TextColor="#86EF7D" FontFamily="OpenSansSemibold" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Big Logo & Title -->
+                <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Label Text="AgriWise" FontSize="38" TextColor="White" FontFamily="OpenSansSemibold" HorizontalTextAlignment="Center" />
+                    <Label Text="Le carnet de culture intelligent pour les agriculteurs" FontSize="16" TextColor="#D4EAD9" HorizontalTextAlignment="Center" MaxLines="2" />
+                    <Label Text="Cultivez sain, dépensez moins, récoltez sans danger." FontSize="14" TextColor="#86EF7D" HorizontalTextAlignment="Center" FontFamily="OpenSansSemibold" />
+                </VerticalStackLayout>
+
+                <!-- Middle Feature Cards -->
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10" Margin="0,10,0,10">
+                    <!-- Feature 1 -->
+                    <Border Grid.Column="0" StrokeShape="RoundRectangle 14" StrokeThickness="1" Stroke="#2A5C43" BackgroundColor="#123523" Padding="10,14">
+                        <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                            <Image Source="ic_calendar.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center"/>
+                            <Label Text="Calcul DAR" FontSize="12" TextColor="White" FontFamily="OpenSansSemibold" HorizontalOptions="Center"/>
+                            <Label Text="Délai sécurité" FontSize="10" TextColor="#A3C7AF" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Feature 2 -->
+                    <Border Grid.Column="1" StrokeShape="RoundRectangle 14" StrokeThickness="1" Stroke="#2A5C43" BackgroundColor="#123523" Padding="10,14">
+                        <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                            <Image Source="ic_flask.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center"/>
+                            <Label Text="Dosage Pulvé" FontSize="12" TextColor="White" FontFamily="OpenSansSemibold" HorizontalOptions="Center"/>
+                            <Label Text="Zéro gaspillage" FontSize="10" TextColor="#A3C7AF" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Feature 3 -->
+                    <Border Grid.Column="2" StrokeShape="RoundRectangle 14" StrokeThickness="1" Stroke="#2A5C43" BackgroundColor="#123523" Padding="10,14">
+                        <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                            <Image Source="ic_shield.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center"/>
+                            <Label Text="Santé" FontSize="12" TextColor="White" FontFamily="OpenSansSemibold" HorizontalOptions="Center"/>
+                            <Label Text="Famille &amp; terre" FontSize="10" TextColor="#A3C7AF" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Value Proposition Banner -->
+                <Border StrokeShape="RoundRectangle 14" StrokeThickness="1" Stroke="#31684B" BackgroundColor="#163F2B" Padding="16,12">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Image Grid.Column="0" Source="ic_leaf.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="Préparation de votre carnet..." TextColor="White" FontSize="13" FontFamily="OpenSansSemibold"/>
+                            <Label Text="Compatible 100% Hors-Ligne pour vos champs." TextColor="#A8CEB5" FontSize="11"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+            </VerticalStackLayout>
+
+            <!-- Bottom Actions -->
+            <VerticalStackLayout Grid.Row="1" Spacing="12" Margin="0,24,0,0">
+                <!-- Primary Start Button -->
+                <Button Text="Commencer"
+                        Clicked="OnStartClicked"
+                        BackgroundColor="#86EF7D"
+                        TextColor="#0B2317"
+                        FontFamily="OpenSansSemibold"
+                        FontSize="16"
+                        HeightRequest="52"
+                        CornerRadius="26" />
+
+                <!-- Secondary Login Button -->
+                <Button Text="J'ai déjà un compte"
+                        Clicked="OnLoginClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        BorderColor="#3A6C52"
+                        BorderWidth="1.5"
+                        FontFamily="OpenSansSemibold"
+                        FontSize="15"
+                        HeightRequest="48"
+                        CornerRadius="24" />
+
+                <!-- Direct skip to demo -->
+                <Button Text="Accéder directement au tableau de bord (Démo)"
+                        Clicked="OnDirectDashboardClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="#A8CEB5"
+                        FontSize="12" />
+
+                <Label Text="Conforme aux normes phytosanitaires d'Afrique Centrale (MINADER &amp; OMS)"
+                       FontSize="10"
+                       TextColor="#6F8F7B"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,8,0,0" />
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+
+</ContentPage>
