@@ -1,0 +1,12 @@
+# Build results
+**/bin/
+**/obj/
+**/Debug/
+**/Release/
+**/.vs/
+**/.vscode/
+*.apk
+*.aab
+*.app
+*.ipa
+.DS_Store
