@@ -6,6 +6,8 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-		MainPage = new AppShell();
+		// Démarre sur l'Onboarding / Splash Screen
+		// Le flux utilisateur est : Onboarding -> Authentification (Login) -> Dashboard (AppShell)
+		MainPage = new NavigationPage(new Views.OnboardingPage());
 	}
 }
