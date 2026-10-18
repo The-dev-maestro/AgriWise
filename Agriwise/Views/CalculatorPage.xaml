@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage Shell.NavBarIsVisible="False" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Agriwise.Views.CalculatorPage"
+             BackgroundColor="#F5F8F5"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="16" Padding="16,20,16,32">
+            
+            <!-- Top Bar -->
+            <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
+                <Border Grid.Column="0" StrokeShape="RoundRectangle 19" BackgroundColor="#EAF1EB" StrokeThickness="0" WidthRequest="38" HeightRequest="38">
+                    <ImageButton Source="ic_back.png" WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent" Clicked="OnBackClicked"/>
+                </Border>
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="2">
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                        <Label Text="Calculateur Pulvérisateur 15L" FontSize="15" FontFamily="OpenSansSemibold" TextColor="#103723"/>
+                        <Border StrokeShape="RoundRectangle 8" BackgroundColor="#E8F8F5" StrokeThickness="0" Padding="6,2">
+                            <Label Text="MINADER" FontSize="9" FontFamily="OpenSansSemibold" TextColor="#117A65"/>
+                        </Border>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="4">
+                        <Image Source="ic_location.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
+                        <Label Text="Foumbot, Cameroun" FontSize="11" TextColor="#7D8F82" HorizontalTextAlignment="Center"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+                <Border Grid.Column="2" StrokeShape="RoundRectangle 19" BackgroundColor="#EAF1EB" WidthRequest="38" HeightRequest="38" StrokeThickness="0">
+                    <Image Source="ic_bell.png" WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Border>
+            </Grid>
+
+            <!-- Advice Card -->
+            <Border StrokeShape="RoundRectangle 14" BackgroundColor="#EAF3EC" Stroke="#CFE2D2" StrokeThickness="1" Padding="14">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Image Grid.Column="0" Source="ic_flask.png" WidthRequest="22" HeightRequest="22" VerticalOptions="Center"/>
+                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                        <Label Text="Évitez le surdosage &amp; protégez vos récoltes" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#103723"/>
+                        <Label Text="Un dosage précis prévient les brûlures de feuillage, respecte les résidus légaux et réduit jusqu'à 30% les coûts d'intrants." FontSize="11" TextColor="#4F6555"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!-- STEP 1 : Parcelle & Culture cible -->
+            <Border StrokeShape="RoundRectangle 14" BackgroundColor="White" Stroke="#E2EAE2" StrokeThickness="1" Padding="14">
+                <VerticalStackLayout Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="1. Parcelle &amp; Culture cible" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#103723"/>
+                        <Label Grid.Column="1" Text="Cameroun Ouest" FontSize="10" TextColor="#27AE60" FontFamily="OpenSansSemibold"/>
+                    </Grid>
+
+                    <Border StrokeShape="RoundRectangle 10" BackgroundColor="#F9FBF9" Stroke="#D2E0D4" StrokeThickness="1" Padding="12,4">
+                        <Picker x:Name="ParcelPicker" TextColor="#103723" FontSize="13">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Parcelle B — Tomate Cobra F1 (0,8 ha)</x:String>
+                                    <x:String>Parcelle A — Cacao Forastero (3,1 ha)</x:String>
+                                    <x:String>Parcelle C — Maïs Hybride (1,2 ha)</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                            <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                        </Picker>
+                    </Border>
+
+                    <Grid ColumnDefinitions="*,*">
+                        <HorizontalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
+                            <Image Source="ic_ruler.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
+                            <Label Text="Superficie : 8 000 m²" FontSize="11" TextColor="#607266"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                            <Image Source="ic_leaf.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
+                            <Label Text="Stade : Floraison / Fruits" FontSize="11" TextColor="#607266"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- STEP 2 : Type de traitement & Intrant -->
+            <Border StrokeShape="RoundRectangle 14" BackgroundColor="White" Stroke="#E2EAE2" StrokeThickness="1" Padding="14">
+                <VerticalStackLayout Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="2. Type de traitement &amp; Intrant" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#103723"/>
+                        <Label Grid.Column="1" Text="Homologué" FontSize="10" TextColor="#117A65"/>
+                    </Grid>
+
+                    <!-- Filter chips -->
+                    <HorizontalStackLayout Spacing="6">
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#103723" StrokeThickness="0" Padding="10,4">
+                            <Label Text="Fongicide" FontSize="11" TextColor="White" FontFamily="OpenSansSemibold"/>
+                        </Border>
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#F0F4F0" StrokeThickness="0" Padding="10,4">
+                            <Label Text="Insecticide" FontSize="11" TextColor="#607266"/>
+                        </Border>
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#F0F4F0" StrokeThickness="0" Padding="10,4">
+                            <Label Text="Bio / Purin" FontSize="11" TextColor="#607266"/>
+                        </Border>
+                    </HorizontalStackLayout>
+
+                    <!-- Active Product Selected -->
+                    <Border StrokeShape="RoundRectangle 10" BackgroundColor="#F0FBF2" Stroke="#86EF7D" StrokeThickness="1.5" Padding="12">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <BoxView Grid.Column="0" Color="#27AE60" CornerRadius="4" WidthRequest="8" HeightRequest="8" VerticalOptions="Center" Margin="0,0,8,0"/>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="Mancozèbe / Manèbe 80 WP" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#103723"/>
+                                <Label Text="Poudre mouillable (Mildiou, Alternariose)" FontSize="10" TextColor="#5B6D60"/>
+                            </VerticalStackLayout>
+                            <Image Grid.Column="2" Source="ic_check.png" WidthRequest="16" HeightRequest="16" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- STEP 3 : Réglages pulvérisateur -->
+            <Border StrokeShape="RoundRectangle 14" BackgroundColor="White" Stroke="#E2EAE2" StrokeThickness="1" Padding="14">
+                <VerticalStackLayout Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="3. Réglages du pulvérisateur à dos" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#103723"/>
+                        <Label Grid.Column="1" Text="Standard 15L" FontSize="10" TextColor="#27AE60" FontFamily="OpenSansSemibold"/>
+                    </Grid>
+
+                    <Label Text="Volume du réservoir :" FontSize="11" TextColor="#7D8F82"/>
+                    <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="6">
+                        <Border Grid.Column="0" StrokeShape="RoundRectangle 8" BackgroundColor="#F5F8F5" StrokeThickness="1" Stroke="#D2E0D4" Padding="6">
+                            <Label Text="10L" FontSize="12" HorizontalOptions="Center" TextColor="#55695C"/>
+                        </Border>
+                        <Border Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="#103723" StrokeThickness="0" Padding="6">
+                            <Label Text="15L" FontSize="12" FontFamily="OpenSansSemibold" HorizontalOptions="Center" TextColor="White"/>
+                        </Border>
+                        <Border Grid.Column="2" StrokeShape="RoundRectangle 8" BackgroundColor="#F5F8F5" StrokeThickness="1" Stroke="#D2E0D4" Padding="6">
+                            <Label Text="16L" FontSize="12" HorizontalOptions="Center" TextColor="#55695C"/>
+                        </Border>
+                        <Border Grid.Column="3" StrokeShape="RoundRectangle 8" BackgroundColor="#F5F8F5" StrokeThickness="1" Stroke="#D2E0D4" Padding="6">
+                            <Label Text="20L" FontSize="12" HorizontalOptions="Center" TextColor="#55695C"/>
+                        </Border>
+                    </Grid>
+
+                    <Label Text="Niveau de pression parasitaire / maladie :" FontSize="11" TextColor="#7D8F82"/>
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="6">
+                        <Border Grid.Column="0" StrokeShape="RoundRectangle 8" BackgroundColor="#F5F8F5" StrokeThickness="1" Stroke="#D2E0D4" Padding="6">
+                            <HorizontalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Image Source="ic_shield.png" WidthRequest="11" HeightRequest="11" VerticalOptions="Center"/>
+                                <Label Text="Faible" FontSize="11" TextColor="#55695C"/>
+                            </HorizontalStackLayout>
+                        </Border>
+                        <Border Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="#E8F8F5" StrokeThickness="1.5" Stroke="#27AE60" Padding="6">
+                            <HorizontalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Image Source="ic_alert.png" WidthRequest="11" HeightRequest="11" VerticalOptions="Center"/>
+                                <Label Text="Modéré" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#117A65"/>
+                            </HorizontalStackLayout>
+                        </Border>
+                        <Border Grid.Column="2" StrokeShape="RoundRectangle 8" BackgroundColor="#F5F8F5" StrokeThickness="1" Stroke="#D2E0D4" Padding="6">
+                            <Label Text="Sévère" FontSize="11" HorizontalOptions="Center" TextColor="#55695C"/>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- RESULT CARD (DOSE EXACTE) -->
+            <Border StrokeShape="RoundRectangle 16" BackgroundColor="#EBF8EE" Stroke="#86EF7D" StrokeThickness="2" Padding="16">
+                <VerticalStackLayout Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="Dose calculée pour 1 pulvérisateur (15L)" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#103723"/>
+                        <Border Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="#86EF7D" StrokeThickness="0" Padding="6,2">
+                            <Label Text="PRÉCISION" FontSize="9" FontFamily="OpenSansSemibold" TextColor="#0B2317"/>
+                        </Border>
+                    </Grid>
+
+                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center" Margin="0,4,0,4">
+                        <Label Text="DOSE NETTE DE POUDRE" FontSize="10" TextColor="#50705A" HorizontalOptions="Center"/>
+                        <Label Text="150 grammes" FontSize="30" FontFamily="OpenSansSemibold" TextColor="#103723" HorizontalOptions="Center"/>
+                        <Label Text="Soit exactement 3 cuillères rases (ou 1 gobelet gradué)" FontSize="11" TextColor="#1E6B39" HorizontalOptions="Center" FontFamily="OpenSansSemibold"/>
+                    </VerticalStackLayout>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,6,0,0">
+                        <Border Grid.Column="0" StrokeShape="RoundRectangle 10" BackgroundColor="White" Stroke="#D2EAD6" StrokeThickness="1" Padding="10">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Volume parcelle" FontSize="10" TextColor="#7D8F82"/>
+                                <Label Text="4 Pulvérisateurs" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#103723"/>
+                                <Label Text="60L de bouillie totale" FontSize="10" TextColor="#7D8F82"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border Grid.Column="1" StrokeShape="RoundRectangle 10" BackgroundColor="White" Stroke="#D2EAD6" StrokeThickness="1" Padding="10">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Économie estimée" FontSize="10" TextColor="#7D8F82"/>
+                                <Label Text="+12 000 FCFA" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#27AE60"/>
+                                <Label Text="Gaspillage évité" FontSize="10" TextColor="#27AE60"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- DAR SECURITY WARNING -->
+            <Border StrokeShape="RoundRectangle 14" BackgroundColor="#FFF8F0" Stroke="#F5B041" StrokeThickness="1.5" Padding="14">
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                            <Image Source="ic_calendar.png" WidthRequest="13" HeightRequest="13" VerticalOptions="Center"/>
+                            <Label Text="Délai Avant Récolte (DAR)" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#A04000"/>
+                        </HorizontalStackLayout>
+                        <Border Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="#E67E22" StrokeThickness="0" Padding="6,2">
+                            <Label Text="14 JOURS MINIMUM" FontSize="9" FontFamily="OpenSansSemibold" TextColor="White"/>
+                        </Border>
+                    </Grid>
+
+                    <Border StrokeShape="RoundRectangle 8" BackgroundColor="White" Stroke="#FAD7A0" StrokeThickness="1" Padding="10">
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                            <Image Source="ic_calendar.png" WidthRequest="16" HeightRequest="16" VerticalOptions="Center"/>
+                            <VerticalStackLayout Spacing="1">
+                                <Label Text="Date de récolte autorisée au plus tôt :" FontSize="10" TextColor="#8D6E63"/>
+                                <Label Text="28 Octobre 2026" FontSize="14" FontFamily="OpenSansSemibold" TextColor="#D35400"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Border>
+
+                    <Label Text="Attention sanitaire : Interdiction formelle de vendre ou consommer les tomates cueillies avant cette date pour protéger les consommateurs." FontSize="10" TextColor="#7E5109"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Step by step instructions -->
+            <Border StrokeShape="RoundRectangle 14" BackgroundColor="White" Stroke="#E2EAE2" StrokeThickness="1" Padding="14">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Préparation de la bouillie (4 Étapes) • EPI Requis" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#103723"/>
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="8">
+                        <Border Grid.Row="0" Grid.Column="0" StrokeShape="RoundRectangle 8" BackgroundColor="#F5F8F5" StrokeThickness="0" Padding="8">
+                            <Label Text="1. Remplir 7,5L d'eau claire dans la cuve." FontSize="10" TextColor="#55695C"/>
+                        </Border>
+                        <Border Grid.Row="0" Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="#F5F8F5" StrokeThickness="0" Padding="8">
+                            <Label Text="2. Pré-diluer les 150g dans un seau séparé." FontSize="10" TextColor="#55695C"/>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="0" StrokeShape="RoundRectangle 8" BackgroundColor="#F5F8F5" StrokeThickness="0" Padding="8">
+                            <Label Text="3. Verser via le filtre et faire l'appoint à 15L." FontSize="10" TextColor="#55695C"/>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="#F5F8F5" StrokeThickness="0" Padding="8">
+                            <Label Text="4. Port du masque et gants obligatoire." FontSize="10" TextColor="#55695C"/>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- SUBMIT BUTTON -->
+            <Button Text="Valider et consigner au carnet de culture"
+                    Clicked="OnValidateClicked"
+                    BackgroundColor="#103723"
+                    TextColor="White"
+                    FontFamily="OpenSansSemibold"
+                    FontSize="14"
+                    HeightRequest="50"
+                    CornerRadius="25"
+                    Margin="0,8,0,0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
