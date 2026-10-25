@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <?xaml-comp compile="true" ?>
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -6,12 +6,12 @@
 
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
-    <Color x:Key="Primary">#512BD4</Color>
-    <Color x:Key="PrimaryDark">#ac99ea</Color>
+    <Color x:Key="Primary">#013A13</Color>
+    <Color x:Key="PrimaryDark">#092215</Color>
     <Color x:Key="PrimaryDarkText">#242424</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
+    <Color x:Key="Secondary">#1E5128</Color>
     <Color x:Key="SecondaryDarkText">#9880e5</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
+    <Color x:Key="Tertiary">#1A6D0E</Color>
 
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
@@ -43,21 +43,65 @@
     <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
     <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
 
-    <!-- AgriWise Custom Theme Palette -->
-    <Color x:Key="AgriPrimary">#103723</Color>
+    <!-- AgriWise Custom Theme Palette (Stitch: AgriWise Field System) -->
+    <Color x:Key="AgriPrimary">#013A13</Color>
+    <Color x:Key="AgriPrimaryContainer">#1E5128</Color>
     <Color x:Key="AgriPrimaryDark">#092215</Color>
     <Color x:Key="AgriPrimaryLight">#1C4E32</Color>
-    <Color x:Key="AgriSecondary">#86EF7D</Color>
+    <Color x:Key="AgriPrimaryFixed">#B8F1B9</Color>
+    <Color x:Key="AgriPrimaryFixedDim">#9CD49E</Color>
+    <Color x:Key="AgriOnPrimary">#FFFFFF</Color>
+
+    <Color x:Key="AgriSecondary">#1A6D0E</Color>
     <Color x:Key="AgriSecondaryLight">#E6FDE3</Color>
-    <Color x:Key="AgriTertiary">#DBE9A8</Color>
+    <Color x:Key="AgriSecondaryContainer">#A1F889</Color>
+    <Color x:Key="AgriOnSecondaryContainer">#227415</Color>
+    
+    <Color x:Key="AgriTertiary">#293506</Color>
+    <Color x:Key="AgriTertiaryFixed">#D9EAA9</Color>
+    <Color x:Key="AgriTertiaryContainer">#3F4C1B</Color>
+
     <Color x:Key="AgriWarning">#E67E22</Color>
+    <Color x:Key="AgriWarningBg">#FEF5EC</Color>
+    <Color x:Key="AgriWarningBorder">#FAD7B2</Color>
+    <Color x:Key="AgriWarningText">#9C4400</Color>
     <Color x:Key="AgriWarningLight">#FDF2E9</Color>
-    <Color x:Key="AgriDanger">#E74C3C</Color>
+
+    <Color x:Key="AgriSuccess">#27AE60</Color>
+    <Color x:Key="AgriSuccessBg">#EAF7EE</Color>
+    <Color x:Key="AgriSuccessBorder">#86EFAC</Color>
+    <Color x:Key="AgriSuccessText">#14532D</Color>
+
+    <Color x:Key="AgriDanger">#D32F2F</Color>
     <Color x:Key="AgriDangerLight">#FDEDEC</Color>
+    <Color x:Key="AgriDangerBg">#FDEDEC</Color>
+
     <Color x:Key="AgriSurface">#FFFFFF</Color>
-    <Color x:Key="AgriBackground">#F5F8F5</Color>
+    <Color x:Key="AgriSurfaceLow">#F5F3F1</Color>
+    <Color x:Key="AgriSurfaceContainer">#EFEEEB</Color>
+    <Color x:Key="AgriSurfaceHigh">#E9E8E6</Color>
+    <Color x:Key="AgriSurfaceDim">#DBDAD8</Color>
+    <Color x:Key="AgriBackground">#FBF9F7</Color>
     <Color x:Key="AgriCardBorder">#E2EAE2</Color>
-    <Color x:Key="AgriTextPrimary">#111F16</Color>
-    <Color x:Key="AgriTextSecondary">#526558</Color>
-    <Color x:Key="AgriTextMuted">#899D90</Color>
+    <Color x:Key="AgriOutline">#71796F</Color>
+    <Color x:Key="AgriOutlineVariant">#C1C9BD</Color>
+
+    <Color x:Key="AgriTextPrimary">#1B1C1B</Color>
+    <Color x:Key="AgriTextSecondary">#414940</Color>
+    <Color x:Key="AgriTextMuted">#71796F</Color>
+
+    <!-- Brushes -->
+    <SolidColorBrush x:Key="AgriPrimaryBrush" Color="{StaticResource AgriPrimary}"/>
+    <SolidColorBrush x:Key="AgriPrimaryContainerBrush" Color="{StaticResource AgriPrimaryContainer}"/>
+    <SolidColorBrush x:Key="AgriSecondaryBrush" Color="{StaticResource AgriSecondary}"/>
+    <SolidColorBrush x:Key="AgriSecondaryContainerBrush" Color="{StaticResource AgriSecondaryContainer}"/>
+    <SolidColorBrush x:Key="AgriWarningBrush" Color="{StaticResource AgriWarning}"/>
+    <SolidColorBrush x:Key="AgriWarningBgBrush" Color="{StaticResource AgriWarningBg}"/>
+    <SolidColorBrush x:Key="AgriSuccessBrush" Color="{StaticResource AgriSuccess}"/>
+    <SolidColorBrush x:Key="AgriSuccessBgBrush" Color="{StaticResource AgriSuccessBg}"/>
+    <SolidColorBrush x:Key="AgriDangerBrush" Color="{StaticResource AgriDanger}"/>
+    <SolidColorBrush x:Key="AgriSurfaceBrush" Color="{StaticResource AgriSurface}"/>
+    <SolidColorBrush x:Key="AgriBackgroundBrush" Color="{StaticResource AgriBackground}"/>
+    <SolidColorBrush x:Key="AgriTextPrimaryBrush" Color="{StaticResource AgriTextPrimary}"/>
+    <SolidColorBrush x:Key="AgriTextSecondaryBrush" Color="{StaticResource AgriTextSecondary}"/>
   </ResourceDictionary>

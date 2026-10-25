@@ -1,199 +1,498 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage Shell.NavBarIsVisible="False" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Agriwise.Views.FinancesPage"
-             BackgroundColor="#F5F8F5"
-             Title="Exploitation">
+             BackgroundColor="#F8F9FA"
+             NavigationPage.HasNavigationBar="False">
 
     <ScrollView>
-        <VerticalStackLayout Spacing="16" Padding="16,18,16,28">
+        <VerticalStackLayout Spacing="16" Padding="16,16,16,36" MaximumWidthRequest="480">
             
-            <!-- Page Header -->
+            <!-- TOP APP BAR -->
             <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
-                <Border Grid.Column="0" StrokeShape="RoundRectangle 19" BackgroundColor="#EAF1EB" StrokeThickness="0" WidthRequest="38" HeightRequest="38">
-                    <ImageButton Source="ic_back.png" WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent" Clicked="OnBackClicked"/>
+                <Border Grid.Column="0" StrokeShape="RoundRectangle 14" BackgroundColor="White" Stroke="#E5E7EB" StrokeThickness="1" WidthRequest="44" HeightRequest="44">
+                    <ImageButton Source="ic_back.png" WidthRequest="18" HeightRequest="18" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent" Clicked="OnBackClicked"/>
                 </Border>
                 <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="2">
-                    <Label Text="Bilan Financier &amp; Rentabilité" FontSize="15" FontFamily="OpenSansSemibold" TextColor="#103723" HorizontalTextAlignment="Center"/>
-                    <Label Text="Campagne 2026 • Foumbot" FontSize="11" TextColor="#7D8F82" HorizontalTextAlignment="Center"/>
+                    <Label Text="Bilan &amp; Rentabilité" FontSize="16" FontFamily="OpenSansSemibold" TextColor="#013A13" HorizontalTextAlignment="Center"/>
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="4">
+                        <Image Source="ic_location.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
+                        <Label Text="Campagne 2026 • Foumbot, Ouest" FontSize="11" TextColor="#71796F"/>
+                    </HorizontalStackLayout>
                 </VerticalStackLayout>
-                <Border Grid.Column="2" StrokeShape="RoundRectangle 19" BackgroundColor="#EAF1EB" StrokeThickness="0" WidthRequest="38" HeightRequest="38">
-                    <ImageButton Source="ic_share.png" WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent" Clicked="OnShareClicked"/>
+                <Border Grid.Column="2" StrokeShape="RoundRectangle 14" BackgroundColor="White" Stroke="#E5E7EB" StrokeThickness="1" WidthRequest="44" HeightRequest="44">
+                    <ImageButton Source="ic_share.png" WidthRequest="18" HeightRequest="18" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent" Clicked="OnShareClicked"/>
                 </Border>
             </Grid>
 
-            <!-- Parcel Switcher Tabs -->
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
-                <Button Grid.Column="0" Text="Parcelle B (Tomate)" BackgroundColor="#103723" TextColor="White" FontFamily="OpenSansSemibold" FontSize="12" HeightRequest="40" CornerRadius="20"/>
-                <Button Grid.Column="1" Text="Parcelle A (Cacao)" BackgroundColor="White" TextColor="#55695C" BorderColor="#D2E0D4" BorderWidth="1" FontSize="12" HeightRequest="40" CornerRadius="20" Clicked="OnSwitchParcelClicked"/>
+            <!-- VIEW MODE TOGGLE (Bilan Parcelle vs Comparatif Global) -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="6" BackgroundColor="#EFEEEC" Padding="4">
+                <Border x:Name="TabBilanBorder" Grid.Column="0" StrokeShape="RoundRectangle 8" BackgroundColor="#013A13" StrokeThickness="0" Padding="8,8">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnShowBilanTab"/>
+                    </Border.GestureRecognizers>
+                    <Label x:Name="TabBilanLabel" Text="Bilan Parcelle" FontSize="12" FontFamily="OpenSansSemibold" TextColor="White" HorizontalOptions="Center"/>
+                </Border>
+                <Border x:Name="TabComparatifBorder" Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="Transparent" StrokeThickness="0" Padding="8,8">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnShowComparatifTab"/>
+                    </Border.GestureRecognizers>
+                    <Label x:Name="TabComparatifLabel" Text="Comparatif (3)" FontSize="12" TextColor="#71796F" HorizontalOptions="Center"/>
+                </Border>
             </Grid>
 
-            <!-- PROFIT & ROI HERO CARD -->
-            <Border StrokeShape="RoundRectangle 16" BackgroundColor="White" Stroke="#D2EAD6" StrokeThickness="1.5" Padding="16">
-                <VerticalStackLayout Spacing="12">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Grid.Column="0" Text="BÉNÉFICE NET PROJETÉ" FontSize="10" TextColor="#607266" FontFamily="OpenSansSemibold"/>
-                        <Border Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="#E8F8F5" StrokeThickness="0" Padding="8,3">
-                            <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
-                                <Image Source="ic_trending_up.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
-                                <Label Text="ROI +126%" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#117A65"/>
+            <!-- SECTION 1: BILAN PARCELLE VIEW -->
+            <VerticalStackLayout x:Name="BilanParcelleLayout" Spacing="16" IsVisible="True">
+                
+                <!-- PARCEL FILTER PILLS -->
+                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                    <HorizontalStackLayout Spacing="6">
+                        <Border StrokeShape="RoundRectangle 16" BackgroundColor="#013A13" StrokeThickness="0" Padding="12,6">
+                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                <Image Source="ic_leaf.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
+                                <Label Text="Parcelle B (Tomate)" FontSize="11" FontFamily="OpenSansSemibold" TextColor="White" VerticalOptions="Center"/>
                             </HorizontalStackLayout>
                         </Border>
-                    </Grid>
-
-                    <Label Text="+285 500 FCFA" FontSize="32" FontFamily="OpenSansSemibold" TextColor="#103723"/>
-
-                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
-                        <Border Grid.Column="0" StrokeShape="RoundRectangle 10" BackgroundColor="#F6FAF6" StrokeThickness="0" Padding="10">
-                            <VerticalStackLayout Spacing="2">
-                                <Label Text="Chiffre d'Affaires" FontSize="10" TextColor="#7D8F82"/>
-                                <Label Text="512 000 F" FontSize="15" FontFamily="OpenSansSemibold" TextColor="#103723"/>
-                                <Label Text="64 cageots × 8 000 F" FontSize="10" TextColor="#7D8F82"/>
-                            </VerticalStackLayout>
+                        <Border StrokeShape="RoundRectangle 16" BackgroundColor="White" Stroke="#E4E2E0" StrokeThickness="1" Padding="12,6">
+                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                <Image Source="ic_leaf.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
+                                <Label Text="Parcelle A (Cacao)" FontSize="11" TextColor="#414940" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
                         </Border>
-
-                        <Border Grid.Column="1" StrokeShape="RoundRectangle 10" BackgroundColor="#F6FAF6" StrokeThickness="0" Padding="10">
-                            <VerticalStackLayout Spacing="2">
-                                <Label Text="Dépenses Engagées" FontSize="10" TextColor="#7D8F82"/>
-                                <Label Text="226 500 F" FontSize="15" FontFamily="OpenSansSemibold" TextColor="#C0392B"/>
-                                <Label Text="Coûts réels de culture" FontSize="10" TextColor="#7D8F82"/>
-                            </VerticalStackLayout>
+                        <Border StrokeShape="RoundRectangle 16" BackgroundColor="White" Stroke="#E4E2E0" StrokeThickness="1" Padding="12,6">
+                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                <Image Source="ic_leaf.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
+                                <Label Text="Parcelle C (Maïs)" FontSize="11" TextColor="#414940" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
                         </Border>
+                    </HorizontalStackLayout>
+                </ScrollView>
+
+                <!-- HERO KPI CARD: NET MARGIN -->
+                <Border StrokeShape="RoundRectangle 14" BackgroundColor="White" Stroke="#E4E2E0" StrokeThickness="1" Padding="0">
+                    <Grid ColumnDefinitions="5,*">
+                        <BoxView Grid.Column="0" Color="#1A6D0E"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="10" Padding="16">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                    <Label Text="BÉNÉFICE NET PROJETÉ" FontSize="10" TextColor="#71796F" FontFamily="OpenSansSemibold" CharacterSpacing="1"/>
+                                    <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                        <Label x:Name="NetMarginValueLabel" Text="+285 500" FontSize="30" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                        <Label Text="FCFA" FontSize="16" FontFamily="OpenSansSemibold" TextColor="#1A6D0E" VerticalOptions="End" Margin="0,0,0,4"/>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                                <Border Grid.Column="1" StrokeShape="RoundRectangle 12" BackgroundColor="#A1F889" StrokeThickness="0" Padding="8,4" VerticalOptions="Start">
+                                    <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                                        <Image Source="ic_trending_up.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
+                                        <Label x:Name="RoiBadgeLabel" Text="ROI +126%" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#012200" VerticalOptions="Center"/>
+                                    </HorizontalStackLayout>
+                                </Border>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                                <Border Grid.Column="0" StrokeShape="RoundRectangle 10" BackgroundColor="#F5F3F1" Stroke="#E4E2E0" StrokeThickness="1" Padding="10">
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label Text="Chiffre d'Affaires" FontSize="10" TextColor="#71796F"/>
+                                        <Label x:Name="RevenuesValueLabel" Text="512 000 FCFA" FontSize="14" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                        <Label Text="64 cageots × 8 000 F" FontSize="10" TextColor="#71796F"/>
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <Border Grid.Column="1" StrokeShape="RoundRectangle 10" BackgroundColor="#F5F3F1" Stroke="#E4E2E0" StrokeThickness="1" Padding="10">
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label Text="Dépenses Engagées" FontSize="10" TextColor="#71796F"/>
+                                        <Label x:Name="ExpensesValueLabel" Text="226 500 FCFA" FontSize="14" FontFamily="OpenSansSemibold" TextColor="#BA1A1A"/>
+                                        <Label Text="Coûts réels de culture" FontSize="10" TextColor="#71796F"/>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </Grid>
+                        </VerticalStackLayout>
                     </Grid>
-                </VerticalStackLayout>
-            </Border>
+                </Border>
 
-            <!-- AGRIWISE DAR SAVINGS CARD -->
-            <Border StrokeShape="RoundRectangle 16" BackgroundColor="#FFFDF9" Stroke="#FAD7A0" StrokeThickness="1.5" Padding="16">
-                <VerticalStackLayout Spacing="10">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Grid.Column="0" Text="ÉCONOMIE DIRECTE AGRIWISE" FontSize="10" TextColor="#B9770E" FontFamily="OpenSansSemibold"/>
-                        <Border Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="#FDEBD0" StrokeThickness="0" Padding="6,2">
-                            <Label Text="OPTIMISÉ" FontSize="9" FontFamily="OpenSansSemibold" TextColor="#784212"/>
-                        </Border>
+                <!-- IMPACT DIRECT & ÉCONOMIE ANTI-SURDOSAGE AGRIWISE -->
+                <Border StrokeShape="RoundRectangle 14" BackgroundColor="#FEF5EC" Stroke="#E67E22" StrokeThickness="1.5" Padding="0">
+                    <Grid ColumnDefinitions="5,*">
+                        <BoxView Grid.Column="0" Color="#E67E22"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="10" Padding="14">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="OPTIMISATION AGRIWISE DAR" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#9C4400" CharacterSpacing="1"/>
+                                <Border Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="#FCE8D5" StrokeThickness="0" Padding="6,2">
+                                    <Label Text="Économie directe" FontSize="9" FontFamily="OpenSansSemibold" TextColor="#873600"/>
+                                </Border>
+                            </Grid>
+
+                            <Label Text="Économies surdosage &amp; DAR" FontSize="14" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                <Label x:Name="DirectSavingsLabel" Text="+48 000 FCFA" FontSize="20" FontFamily="OpenSansSemibold" TextColor="#1E5128"/>
+                                <Label Text="épargnés en intrants" FontSize="12" TextColor="#71796F" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Label Text="3 passages fongicides évités et calibrage précis des pulvérisateurs 15L sans surplus de bouillie au champ." FontSize="11" TextColor="#783400" LineHeight="1.2"/>
+
+                            <!-- Comparison bars -->
+                            <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Stroke="#FAD7B2" StrokeThickness="1" Padding="10">
+                                <VerticalStackLayout Spacing="6">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Grid.Column="0" Text="Pratiques courantes (surdosage) :" FontSize="10" TextColor="#71796F"/>
+                                        <Label Grid.Column="1" Text="274 500 F" FontSize="10" TextColor="#1B1C1B"/>
+                                    </Grid>
+                                    <ProgressBar Progress="1.0" ProgressColor="#C1C9BD"/>
+
+                                    <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                                        <HorizontalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
+                                            <Image Source="ic_check.png" WidthRequest="10" HeightRequest="10" VerticalOptions="Center"/>
+                                            <Label Text="Avec AgriWise (dosage mesuré) :" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#1A6D0E" VerticalOptions="Center"/>
+                                        </HorizontalStackLayout>
+                                        <Label Grid.Column="1" Text="226 500 F (-48 000 F)" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#1A6D0E"/>
+                                    </Grid>
+                                    <ProgressBar Progress="0.82" ProgressColor="#1A6D0E"/>
+                                </VerticalStackLayout>
+                            </Border>
+                        </VerticalStackLayout>
                     </Grid>
+                </Border>
 
-                    <Label Text="+48 000 FCFA épargnés en intrants" FontSize="17" FontFamily="OpenSansSemibold" TextColor="#A04000"/>
-                    <Label Text="3 passages fongicides inutiles évités et calibrage exact des pulvérisateurs (15L) sans perte de bouillie au champ." FontSize="11" TextColor="#7D6608"/>
-
-                    <VerticalStackLayout Spacing="4" Margin="0,4,0,0">
+                <!-- VENTILATION DES CHARGES (EXPENSE BREAKDOWN) -->
+                <Border StrokeShape="RoundRectangle 14" BackgroundColor="White" Stroke="#E4E2E0" StrokeThickness="1" Padding="14">
+                    <VerticalStackLayout Spacing="10">
                         <Grid ColumnDefinitions="*,Auto">
-                            <Label Grid.Column="0" Text="Pratiques courantes (surdosage) :" FontSize="10" TextColor="#7D6608"/>
-                            <Label Grid.Column="1" Text="274 500 F" FontSize="10" TextColor="#7D6608"/>
+                            <HorizontalStackLayout Grid.Column="0" Spacing="6" VerticalOptions="Center">
+                                <Image Source="ic_pie.png" WidthRequest="16" HeightRequest="16" VerticalOptions="Center"/>
+                                <Label Text="Ventilation des Charges" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#013A13" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Label Grid.Column="1" Text="226 500 FCFA" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#1B1C1B"/>
                         </Grid>
-                        <ProgressBar Progress="1.0" ProgressColor="#D5D8DC"/>
-                        
-                        <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
-                            <Label Grid.Column="0" Text="Avec AgriWise (dosage mesuré) :" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#27AE60"/>
-                            <Label Grid.Column="1" Text="226 500 F (-48 000 F)" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#27AE60"/>
+
+                        <!-- Segmented Bar Visualization -->
+                        <Grid ColumnDefinitions="30*,33*,19*,18*" HeightRequest="8">
+                            <BoxView Grid.Column="0" Color="#1E5128" CornerRadius="4,0,4,0"/>
+                            <BoxView Grid.Column="1" Color="#4E9F3D"/>
+                            <BoxView Grid.Column="2" Color="#8CC38F"/>
+                            <BoxView Grid.Column="3" Color="#BDCD8F" CornerRadius="0,4,0,4"/>
                         </Grid>
-                        <ProgressBar Progress="0.82" ProgressColor="#27AE60"/>
+
+                        <VerticalStackLayout Spacing="8" Margin="0,4,0,0">
+                            <!-- 1. Intrants -->
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                                <BoxView Grid.Column="0" Color="#1E5128" CornerRadius="4" WidthRequest="10" HeightRequest="10" VerticalOptions="Center"/>
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="Intrants &amp; Produits phytosanitaires" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#1B1C1B"/>
+                                    <Label Text="Optimisé · 0 gaspillage" FontSize="9" TextColor="#1A6D0E"/>
+                                </VerticalStackLayout>
+                                <Label Grid.Column="2" Text="68 000 F (30%)" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#013A13" VerticalOptions="Center"/>
+                            </Grid>
+
+                            <!-- 2. Main d'oeuvre -->
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                                <BoxView Grid.Column="0" Color="#4E9F3D" CornerRadius="4" WidthRequest="10" HeightRequest="10" VerticalOptions="Center"/>
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="Main d'œuvre locale" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#1B1C1B"/>
+                                    <Label Text="Semis, buttage &amp; pulvérisation" FontSize="9" TextColor="#71796F"/>
+                                </VerticalStackLayout>
+                                <Label Grid.Column="2" Text="76 000 F (33%)" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#013A13" VerticalOptions="Center"/>
+                            </Grid>
+
+                            <!-- 3. Semences -->
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                                <BoxView Grid.Column="0" Color="#8CC38F" CornerRadius="4" WidthRequest="10" HeightRequest="10" VerticalOptions="Center"/>
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="Semences certifiées Cobra F1" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#1B1C1B"/>
+                                    <Label Text="Plants certifiés résistants" FontSize="9" TextColor="#71796F"/>
+                                </VerticalStackLayout>
+                                <Label Grid.Column="2" Text="42 500 F (19%)" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#013A13" VerticalOptions="Center"/>
+                            </Grid>
+
+                            <!-- 4. Irrigation -->
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                                <BoxView Grid.Column="0" Color="#BDCD8F" CornerRadius="4" WidthRequest="10" HeightRequest="10" VerticalOptions="Center"/>
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="Carburant Motopompe &amp; Arrosage" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#1B1C1B"/>
+                                    <Label Text="Pompage rivière Noun" FontSize="9" TextColor="#71796F"/>
+                                </VerticalStackLayout>
+                                <Label Grid.Column="2" Text="40 000 F (18%)" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#013A13" VerticalOptions="Center"/>
+                            </Grid>
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
-                </VerticalStackLayout>
-            </Border>
+                </Border>
 
-            <!-- EXPENSE BREAKDOWN -->
-            <Border StrokeShape="RoundRectangle 16" BackgroundColor="White" Stroke="#E2EAE2" StrokeThickness="1" Padding="14">
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="Ventilation des Charges (226 500 FCFA)" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#103723"/>
+                <!-- PROJECTIONS & VALORISATION MARCHÉ -->
+                <Border StrokeShape="RoundRectangle 14" BackgroundColor="White" Stroke="#E4E2E0" StrokeThickness="1" Padding="14">
+                    <VerticalStackLayout Spacing="10">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Projections Marché Foumbot" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                            <Border Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="#A1F889" StrokeThickness="0" Padding="6,2">
+                                <Label Text="COURS STABLE" FontSize="9" FontFamily="OpenSansSemibold" TextColor="#012200"/>
+                            </Border>
+                        </Grid>
 
-                    <VerticalStackLayout Spacing="8">
-                        <!-- Item 1 -->
-                        <Grid ColumnDefinitions="Auto,*,Auto">
-                            <BoxView Grid.Column="0" Color="#103723" CornerRadius="4" WidthRequest="10" HeightRequest="10" VerticalOptions="Center" Margin="0,0,8,0"/>
-                            <Label Grid.Column="1" Text="Intrants &amp; Produits phytosanitaires" FontSize="11" TextColor="#103723"/>
-                            <Label Grid.Column="2" Text="68 000 F (30%)" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#103723"/>
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Border Grid.Column="0" StrokeShape="RoundRectangle 8" BackgroundColor="#F5F3F1" StrokeThickness="0" Padding="10">
+                                <VerticalStackLayout Spacing="1">
+                                    <Label Text="Rendement estimé" FontSize="10" TextColor="#71796F"/>
+                                    <Label Text="3,2 tonnes" FontSize="14" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                    <Label Text="~64 cageots de 50kg" FontSize="9" TextColor="#71796F"/>
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="#F5F3F1" StrokeThickness="0" Padding="10">
+                                <VerticalStackLayout Spacing="1">
+                                    <Label Text="Prix moyen cageot" FontSize="10" TextColor="#71796F"/>
+                                    <Label Text="8 000 FCFA" FontSize="14" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                    <Label Text="Tendance stable" FontSize="9" TextColor="#71796F"/>
+                                </VerticalStackLayout>
+                            </Border>
                         </Grid>
-                        <!-- Item 2 -->
-                        <Grid ColumnDefinitions="Auto,*,Auto">
-                            <BoxView Grid.Column="0" Color="#27AE60" CornerRadius="4" WidthRequest="10" HeightRequest="10" VerticalOptions="Center" Margin="0,0,8,0"/>
-                            <Label Grid.Column="1" Text="Main d'oeuvre (Semis &amp; traitement)" FontSize="11" TextColor="#103723"/>
-                            <Label Grid.Column="2" Text="76 000 F (33%)" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#103723"/>
+
+                        <Border StrokeShape="RoundRectangle 8" BackgroundColor="#EAF7EE" Stroke="#27AE60" StrokeThickness="1" Padding="10">
+                            <HorizontalStackLayout Spacing="8">
+                                <Image Source="ic_trophy.png" WidthRequest="20" HeightRequest="20" VerticalOptions="Center"/>
+                                <VerticalStackLayout Spacing="1">
+                                    <Label Text="Récolte certifiée sans résidus (DAR respecté)" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                    <Label Text="Prix premium négociable (+15%) auprès des grossistes de Douala et Yaoundé." FontSize="10" TextColor="#414940"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- RECENT TRANSACTIONS -->
+                <Label Text="DERNIÈRES DÉPENSES ENREGISTRÉES" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#71796F" CharacterSpacing="1"/>
+                <Border StrokeShape="RoundRectangle 12" BackgroundColor="White" Stroke="#E4E2E0" StrokeThickness="1" Padding="12">
+                    <VerticalStackLayout Spacing="10">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                            <Border Grid.Column="0" StrokeShape="RoundRectangle 8" BackgroundColor="#F5F3F1" StrokeThickness="0" WidthRequest="34" HeightRequest="34">
+                                <Image Source="ic_flask.png" WidthRequest="18" HeightRequest="18" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="1">
+                                <Label Text="Fongicide Manèbe &amp; EPI" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                <Label Text="14 Octobre 2026 • Reçu n°441" FontSize="10" TextColor="#71796F"/>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="-14 000 F" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#BA1A1A" VerticalOptions="Center"/>
                         </Grid>
-                        <!-- Item 3 -->
-                        <Grid ColumnDefinitions="Auto,*,Auto">
-                            <BoxView Grid.Column="0" Color="#86EF7D" CornerRadius="4" WidthRequest="10" HeightRequest="10" VerticalOptions="Center" Margin="0,0,8,0"/>
-                            <Label Grid.Column="1" Text="Semences certifiées Cobra F1" FontSize="11" TextColor="#103723"/>
-                            <Label Grid.Column="2" Text="42 500 F (19%)" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#103723"/>
+
+                        <BoxView HeightRequest="1" Color="#EFEEEC"/>
+
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                            <Border Grid.Column="0" StrokeShape="RoundRectangle 8" BackgroundColor="#F5F3F1" StrokeThickness="0" WidthRequest="34" HeightRequest="34">
+                                <Image Source="ic_leaf.png" WidthRequest="18" HeightRequest="18" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="1">
+                                <Label Text="2 sacs Engrais NPK 20-10-10" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                <Label Text="02 Octobre 2026 • GIC Maraîcher" FontSize="10" TextColor="#71796F"/>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="-49 000 F" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#BA1A1A" VerticalOptions="Center"/>
                         </Grid>
-                        <!-- Item 4 -->
-                        <Grid ColumnDefinitions="Auto,*,Auto">
-                            <BoxView Grid.Column="0" Color="#DBE9A8" CornerRadius="4" WidthRequest="10" HeightRequest="10" VerticalOptions="Center" Margin="0,0,8,0"/>
-                            <Label Grid.Column="1" Text="Carburant Motopompe &amp; Arrosage" FontSize="11" TextColor="#103723"/>
-                            <Label Grid.Column="2" Text="40 000 F (18%)" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#103723"/>
+
+                        <BoxView HeightRequest="1" Color="#EFEEEC"/>
+
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                            <Border Grid.Column="0" StrokeShape="RoundRectangle 8" BackgroundColor="#F5F3F1" StrokeThickness="0" WidthRequest="34" HeightRequest="34">
+                                <Image Source="ic_person.png" WidthRequest="18" HeightRequest="18" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="1">
+                                <Label Text="2 ouvriers sarclage &amp; buttage" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                <Label Text="20 Septembre 2026 • 2 journées" FontSize="10" TextColor="#71796F"/>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="-10 000 F" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#BA1A1A" VerticalOptions="Center"/>
                         </Grid>
                     </VerticalStackLayout>
-                </VerticalStackLayout>
-            </Border>
+                </Border>
 
-            <!-- MARKET PROJECTION & PREMIUM -->
-            <Border StrokeShape="RoundRectangle 14" BackgroundColor="#EAF8F0" Stroke="#C2EAD0" StrokeThickness="1" Padding="14">
-                <VerticalStackLayout Spacing="8">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Grid.Column="0" Text="Projections Marché Foumbot" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#103723"/>
-                        <Label Grid.Column="1" Text="Cours Stable" FontSize="10" TextColor="#27AE60" FontFamily="OpenSansSemibold"/>
-                    </Grid>
-                    <Grid ColumnDefinitions="*,*">
-                        <Label Grid.Column="0" Text="Rendement estimé : 3,2 tonnes" FontSize="11" TextColor="#4F6555"/>
-                        <Label Grid.Column="1" Text="Prix moyen : 8 000 F / cageot" FontSize="11" TextColor="#4F6555"/>
-                    </Grid>
-                    <Border StrokeShape="RoundRectangle 8" BackgroundColor="White" StrokeThickness="0" Padding="10,6">
-                        <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
-                            <Image Source="ic_tag.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
-                            <Label Text="Bonus DAR respecté : Récoltes sans résidus (+15% grossistes)" FontSize="10" TextColor="#117A65" FontFamily="OpenSansSemibold"/>
-                        </HorizontalStackLayout>
-                    </Border>
-                </VerticalStackLayout>
-            </Border>
+            </VerticalStackLayout>
 
-            <!-- RECENT TRANSACTIONS -->
-            <Label Text="Dernières Dépenses Enregistrées" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#103723" Margin="0,4,0,0"/>
+            <!-- SECTION 2: COMPARATIF RENTABILITÉ VIEW -->
+            <VerticalStackLayout x:Name="ComparatifLayout" Spacing="16" IsVisible="False">
+                
+                <!-- GLOBAL HERO BENTO -->
+                <Border StrokeShape="RoundRectangle 14" BackgroundColor="White" Stroke="#E4E2E0" StrokeThickness="1" Padding="16">
+                    <VerticalStackLayout Spacing="10">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                <Label Text="BÉNÉFICE NET PROJETÉ TOTAL" FontSize="10" TextColor="#71796F" FontFamily="OpenSansSemibold" CharacterSpacing="1"/>
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label x:Name="TotalNetMarginValueLabel" Text="+1 435 000" FontSize="28" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                    <Label Text="FCFA" FontSize="14" FontFamily="OpenSansSemibold" TextColor="#1A6D0E" VerticalOptions="End" Margin="0,0,0,4"/>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                            <Border Grid.Column="1" StrokeShape="RoundRectangle 12" BackgroundColor="#A1F889" StrokeThickness="0" Padding="8,4" VerticalOptions="Start">
+                                <Label x:Name="TotalRoiBadgeLabel" Text="+119% ROI" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#012200"/>
+                            </Border>
+                        </Grid>
 
-            <Border StrokeShape="RoundRectangle 14" BackgroundColor="White" Stroke="#E2EAE2" StrokeThickness="1" Padding="12">
-                <VerticalStackLayout Spacing="10">
-                    <Grid ColumnDefinitions="Auto,*,Auto">
-                        <Image Grid.Column="0" Source="ic_flask.png" WidthRequest="18" HeightRequest="18" VerticalOptions="Center" Margin="0,0,10,0"/>
-                        <VerticalStackLayout Grid.Column="1">
-                            <Label Text="Fongicide Manèbe &amp; EPI" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#103723"/>
-                            <Label Text="14 Octobre • Reçu n°441" FontSize="10" TextColor="#7D8F82"/>
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Border Grid.Column="0" StrokeShape="RoundRectangle 10" BackgroundColor="#F5F3F1" StrokeThickness="0" Padding="10">
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="Recettes Totales" FontSize="10" TextColor="#71796F"/>
+                                    <Label x:Name="TotalRevenuesValueLabel" Text="2 640 000 F" FontSize="14" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="1" StrokeShape="RoundRectangle 10" BackgroundColor="#F5F3F1" StrokeThickness="0" Padding="10">
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="Charges Totales" FontSize="10" TextColor="#71796F"/>
+                                    <Label x:Name="TotalExpensesValueLabel" Text="1 205 000 F" FontSize="14" FontFamily="OpenSansSemibold" TextColor="#1B1C1B"/>
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+
+                        <Border StrokeShape="RoundRectangle 8" BackgroundColor="#EAF7EE" Stroke="#1A6D0E" StrokeThickness="1" Padding="10">
+                            <HorizontalStackLayout Spacing="8">
+                                <Image Source="ic_leaf.png" WidthRequest="18" HeightRequest="18" VerticalOptions="Center"/>
+                                <VerticalStackLayout Spacing="1">
+                                    <Label x:Name="TotalSavingsValueLabel" Text="+115 000 FCFA économisés avec AgriWise" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                    <Label Text="Dosages calibrés au pulvérisateur &amp; zéro gaspillage DAR." FontSize="10" TextColor="#414940"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ARBITRAGE CLÉ RIBBON -->
+                <Border StrokeShape="RoundRectangle 12" BackgroundColor="#EFF9EB" Stroke="#D9EAA9" StrokeThickness="1" Padding="12">
+                    <HorizontalStackLayout Spacing="8">
+                        <Image Source="ic_alert.png" WidthRequest="16" HeightRequest="16" VerticalOptions="Start"/>
+                        <Label Text="Arbitrage clé : La Tomate Cobra génère la plus forte marge nette/ha, tandis que le Cacao sécurise la meilleure rentabilité du capital (+159% ROI) à faible charge chimique." FontSize="11" TextColor="#293506" LineHeight="1.2"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Label Text="CLASSEMENT DES 3 PARCELLES" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#71796F" CharacterSpacing="1"/>
+
+                <!-- RANK 1 : Tomate Cobra -->
+                <Border StrokeShape="RoundRectangle 12" BackgroundColor="White" Stroke="#E4E2E0" StrokeThickness="1" Padding="0">
+                    <Grid ColumnDefinitions="5,*">
+                        <BoxView Grid.Column="0" Color="#013A13"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="6" Padding="14">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <HorizontalStackLayout Grid.Column="0" Spacing="8">
+                                    <Border StrokeShape="RoundRectangle 10" BackgroundColor="#013A13" StrokeThickness="0" WidthRequest="22" HeightRequest="22" VerticalOptions="Center">
+                                        <Label Text="1" FontSize="11" FontFamily="OpenSansSemibold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                    <VerticalStackLayout Spacing="1">
+                                        <Label Text="Parcelle B · Tomate Cobra F1" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                        <Label Text="0,8 Hectare · Maraîchage intensif" FontSize="10" TextColor="#71796F"/>
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                                <Border Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="#A1F889" StrokeThickness="0" Padding="6,2">
+                                    <Label Text="+126% ROI" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#012200"/>
+                                </Border>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="*,*,*" BackgroundColor="#F5F3F1" Padding="8,6" Margin="0,4,0,0">
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Label Text="Bénéfice Net" FontSize="9" TextColor="#71796F"/>
+                                    <Label Text="+285 500 F" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="Marge / ha" FontSize="9" TextColor="#71796F"/>
+                                    <Label Text="356 875 F" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#1A6D0E"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="2">
+                                    <Label Text="% Intrants" FontSize="9" TextColor="#71796F"/>
+                                    <Label Text="30%" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#BA1A1A"/>
+                                </VerticalStackLayout>
+                            </Grid>
                         </VerticalStackLayout>
-                        <Label Grid.Column="2" Text="-14 000 F" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#C0392B" VerticalOptions="Center"/>
                     </Grid>
+                </Border>
 
-                    <BoxView HeightRequest="1" Color="#F0F4F0"/>
+                <!-- RANK 2 : Cacao Hybride -->
+                <Border StrokeShape="RoundRectangle 12" BackgroundColor="White" Stroke="#E4E2E0" StrokeThickness="1" Padding="0">
+                    <Grid ColumnDefinitions="5,*">
+                        <BoxView Grid.Column="0" Color="#1E5128"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="6" Padding="14">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <HorizontalStackLayout Grid.Column="0" Spacing="8">
+                                    <Border StrokeShape="RoundRectangle 10" BackgroundColor="#1E5128" StrokeThickness="0" WidthRequest="22" HeightRequest="22" VerticalOptions="Center">
+                                        <Label Text="2" FontSize="11" FontFamily="OpenSansSemibold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                    <VerticalStackLayout Spacing="1">
+                                        <Label Text="Parcelle A · Cacao Hybride" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                        <Label Text="1,5 Hectare · Arboriculture pérenne" FontSize="10" TextColor="#71796F"/>
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                                <Border Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="#EAF7EE" Stroke="#27AE60" StrokeThickness="1" Padding="6,2">
+                                    <Label Text="+159% ROI" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#27AE60"/>
+                                </Border>
+                            </Grid>
 
-                    <Grid ColumnDefinitions="Auto,*,Auto">
-                        <Image Grid.Column="0" Source="ic_leaf.png" WidthRequest="18" HeightRequest="18" VerticalOptions="Center" Margin="0,0,10,0"/>
-                        <VerticalStackLayout Grid.Column="1">
-                            <Label Text="2 sacs Engrais NPK 20-10-10" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#103723"/>
-                            <Label Text="02 Octobre • GIC Maraîcher" FontSize="10" TextColor="#7D8F82"/>
+                            <Grid ColumnDefinitions="*,*,*" BackgroundColor="#F5F3F1" Padding="8,6" Margin="0,4,0,0">
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Label Text="Bénéfice Net" FontSize="9" TextColor="#71796F"/>
+                                    <Label Text="+875 000 F" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="Marge / ha" FontSize="9" TextColor="#71796F"/>
+                                    <Label Text="583 333 F" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#1A6D0E"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="2">
+                                    <Label Text="% Intrants" FontSize="9" TextColor="#71796F"/>
+                                    <Label Text="12%" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#1A6D0E"/>
+                                </VerticalStackLayout>
+                            </Grid>
                         </VerticalStackLayout>
-                        <Label Grid.Column="2" Text="-48 000 F" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#C0392B" VerticalOptions="Center"/>
                     </Grid>
+                </Border>
 
-                    <BoxView HeightRequest="1" Color="#F0F4F0"/>
+                <!-- RANK 3 : Maïs Jaune -->
+                <Border StrokeShape="RoundRectangle 12" BackgroundColor="White" Stroke="#E4E2E0" StrokeThickness="1" Padding="0">
+                    <Grid ColumnDefinitions="5,*">
+                        <BoxView Grid.Column="0" Color="#8CC38F"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="6" Padding="14">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <HorizontalStackLayout Grid.Column="0" Spacing="8">
+                                    <Border StrokeShape="RoundRectangle 10" BackgroundColor="#71796F" StrokeThickness="0" WidthRequest="22" HeightRequest="22" VerticalOptions="Center">
+                                        <Label Text="3" FontSize="11" FontFamily="OpenSansSemibold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                    <VerticalStackLayout Spacing="1">
+                                        <Label Text="Parcelle C · Maïs Jaune CMS 8704" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                        <Label Text="2,0 Hectares · Céréale vivrière" FontSize="10" TextColor="#71796F"/>
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                                <Border Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="#EFEEEC" StrokeThickness="0" Padding="6,2">
+                                    <Label Text="+94% ROI" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#414940"/>
+                                </Border>
+                            </Grid>
 
-                    <Grid ColumnDefinitions="Auto,*,Auto">
-                        <Image Grid.Column="0" Source="ic_calendar.png" WidthRequest="18" HeightRequest="18" VerticalOptions="Center" Margin="0,0,10,0"/>
-                        <VerticalStackLayout Grid.Column="1">
-                            <Label Text="2 ouvriers sarclage &amp; buttage" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#103723"/>
-                            <Label Text="20 Septembre • 2 jours de travail" FontSize="10" TextColor="#7D8F82"/>
+                            <Grid ColumnDefinitions="*,*,*" BackgroundColor="#F5F3F1" Padding="8,6" Margin="0,4,0,0">
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Label Text="Bénéfice Net" FontSize="9" TextColor="#71796F"/>
+                                    <Label Text="+274 500 F" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="Marge / ha" FontSize="9" TextColor="#71796F"/>
+                                    <Label Text="137 250 F" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#414940"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="2">
+                                    <Label Text="% Intrants" FontSize="9" TextColor="#71796F"/>
+                                    <Label Text="24%" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#E67E22"/>
+                                </VerticalStackLayout>
+                            </Grid>
                         </VerticalStackLayout>
-                        <Label Grid.Column="2" Text="-10 000 F" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#C0392B" VerticalOptions="Center"/>
                     </Grid>
-                </VerticalStackLayout>
-            </Border>
+                </Border>
 
-            <!-- ACTION BUTTON -->
-            <Button Text="Ajouter une dépense ou vente"
-                    Clicked="OnAddTransactionClicked"
-                    BackgroundColor="#103723"
-                    TextColor="White"
-                    FontFamily="OpenSansSemibold"
-                    FontSize="14"
-                    HeightRequest="48"
-                    CornerRadius="24"
-                    Margin="0,8,0,0"/>
+            </VerticalStackLayout>
+
+            <!-- CTAS / ACTION BUTTONS -->
+            <VerticalStackLayout Spacing="10" Margin="0,8,0,0">
+                <Button Text="+ Ajouter une dépense ou vente"
+                        Clicked="OnAddTransactionClicked"
+                        BackgroundColor="#013A13"
+                        TextColor="White"
+                        FontFamily="OpenSansSemibold"
+                        FontSize="14"
+                        HeightRequest="52"
+                        CornerRadius="10"/>
+
+                <Button Text="Télécharger le rapport PDF / WhatsApp"
+                        Clicked="OnShareClicked"
+                        BackgroundColor="White"
+                        BorderColor="#013A13"
+                        BorderWidth="1.5"
+                        TextColor="#013A13"
+                        FontFamily="OpenSansSemibold"
+                        FontSize="14"
+                        HeightRequest="50"
+                        CornerRadius="10"/>
+            </VerticalStackLayout>
 
         </VerticalStackLayout>
     </ScrollView>

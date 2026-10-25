@@ -1,178 +1,165 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage Shell.NavBarIsVisible="False" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Agriwise.Views.HealthGuidePage"
-             BackgroundColor="#F5F8F5"
-             Title="Guide Santé">
+             BackgroundColor="#F8F9FA"
+             NavigationPage.HasNavigationBar="False">
 
     <ScrollView>
-        <VerticalStackLayout Spacing="16" Padding="16,18,16,28">
+        <VerticalStackLayout Spacing="16" Padding="16,16,16,36" MaximumWidthRequest="480">
             
-            <!-- Page Header -->
-            <VerticalStackLayout Spacing="4">
-                <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                    <Image Source="ic_shield.png" WidthRequest="22" HeightRequest="22" VerticalOptions="Center"/>
-                    <Label Text="Guide Santé &amp; Intrants" FontSize="20" FontFamily="OpenSansSemibold" TextColor="#103723" VerticalOptions="Center"/>
-                </HorizontalStackLayout>
-                <Label Text="Réglementation MINADER, calcul des délais avant récolte (DAR) et protection des familles au Cameroun." FontSize="11" TextColor="#607266"/>
-            </VerticalStackLayout>
-
-            <!-- Big Sanitary Alert -->
-            <Border StrokeShape="RoundRectangle 14" BackgroundColor="#FFF8F0" Stroke="#F5B041" StrokeThickness="1.5" Padding="14">
-                <VerticalStackLayout Spacing="8">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
-                            <Image Source="ic_alert.png" WidthRequest="13" HeightRequest="13" VerticalOptions="Center"/>
-                            <Label Text="Alerte Sanitaire : Respectez le DAR !" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#A04000"/>
-                        </HorizontalStackLayout>
-                        <Border Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="#FAD7A0" StrokeThickness="0" Padding="6,2">
-                            <Label Text="MINADER 2026" FontSize="9" FontFamily="OpenSansSemibold" TextColor="#784212"/>
-                        </Border>
-                    </Grid>
-                    <Label Text="74% des exploitants maraîchers ne respectant pas le délai d'attente avant récolte mettent leur santé et celle des familles consommatrices en péril." FontSize="11" TextColor="#7D6608"/>
-                </VerticalStackLayout>
-            </Border>
-
-            <!-- PRACTICAL CALCULATOR TOOL HERO CARD -->
-            <Border StrokeShape="RoundRectangle 16" BackgroundColor="#103723" Padding="16">
-                <VerticalStackLayout Spacing="10">
-                    <Border StrokeShape="RoundRectangle 10" BackgroundColor="#1E4D36" StrokeThickness="0" Padding="8,4" HorizontalOptions="Start">
-                        <Label Text="OUTIL PRATIQUE TERRAIN" FontSize="9" FontFamily="OpenSansSemibold" TextColor="#86EF7D"/>
+            <!-- TOP APP BAR -->
+            <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
+                <HorizontalStackLayout Grid.Column="0" Spacing="10" VerticalOptions="Center">
+                    <Border StrokeShape="RoundRectangle 20" BackgroundColor="#1E5128" StrokeThickness="0" WidthRequest="40" HeightRequest="40">
+                        <Image Source="ic_person.png" WidthRequest="22" HeightRequest="22" HorizontalOptions="Center" VerticalOptions="Center"/>
                     </Border>
-                    <Label Text="Calculateur Pulvérisateur &amp; DAR" FontSize="16" FontFamily="OpenSansSemibold" TextColor="White"/>
-                    <Label Text="Ajustez le volume d'eau et le dosage exact par pulvérisateur à dos de 15L pour éviter tout surdosage toxique." FontSize="11" TextColor="#C4E0CC"/>
-                    
-                    <Button Text="Calculer mon dosage"
-                            Clicked="OnOpenCalculatorClicked"
-                            BackgroundColor="#86EF7D"
-                            TextColor="#0B2317"
-                            FontFamily="OpenSansSemibold"
-                            FontSize="12"
-                            HeightRequest="40"
-                            CornerRadius="20"
-                            Margin="0,4,0,0"/>
-                </VerticalStackLayout>
-            </Border>
+                    <VerticalStackLayout Spacing="1">
+                        <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                            <Label Text="AgriWise" FontSize="16" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                            <Border StrokeShape="RoundRectangle 8" BackgroundColor="#B8F1B9" StrokeThickness="0" Padding="6,2">
+                                <Label Text="MINADER" FontSize="9" FontFamily="OpenSansSemibold" TextColor="#002108"/>
+                            </Border>
+                        </HorizontalStackLayout>
+                        <Label Text="Ouest, Cameroun • Base locale à jour" FontSize="10" TextColor="#71796F"/>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
 
-            <!-- SEARCH BAR -->
-            <Border StrokeShape="RoundRectangle 12" BackgroundColor="White" Stroke="#D2E0D4" StrokeThickness="1" Padding="12,4">
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" VerticalOptions="Center">
-                    <Image Grid.Column="0" Source="ic_search.png" WidthRequest="16" HeightRequest="16" VerticalOptions="Center"/>
-                    <Entry Grid.Column="1" Placeholder="Rechercher un produit (Mancozèbe, NPK, Cuivre...)" FontSize="12" TextColor="#103723"/>
+                <Border Grid.Column="2" StrokeShape="RoundRectangle 20" BackgroundColor="#EFEEEC" StrokeThickness="0" WidthRequest="38" HeightRequest="38">
+                    <ImageButton Source="ic_bell.png" WidthRequest="18" HeightRequest="18" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent"/>
+                </Border>
+            </Grid>
+
+            <!-- SECTION TITLE -->
+            <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                    <Label Text="Guide Santé &amp; Intrants" FontSize="20" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                    <Label Text="Réglementation phytosanitaire &amp; sécurité des applicateurs au Cameroun." FontSize="11" TextColor="#71796F"/>
+                </VerticalStackLayout>
+                <Border Grid.Column="1" StrokeShape="RoundRectangle 12" BackgroundColor="#EFEEEC" Stroke="#E4E2E0" StrokeThickness="1" Padding="8,4" VerticalOptions="Center">
+                    <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                        <Image Source="ic_shield.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
+                        <Label Text="Certifié" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#1A6D0E" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- HEALTH AWARENESS BANNER (DAR 74% ALERT) -->
+            <Border StrokeShape="RoundRectangle 12" BackgroundColor="#FEF5EC" Stroke="#E67E22" StrokeThickness="1.5" Padding="14">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Border Grid.Column="0" StrokeShape="RoundRectangle 20" BackgroundColor="#FCE8D5" StrokeThickness="0" WidthRequest="38" HeightRequest="38" VerticalOptions="Start">
+                        <Image Source="ic_alert.png" WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="4">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0" Text="Alerte Sanitaire : Respectez le DAR" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#944100"/>
+                            <Label Grid.Column="1" Text="2024-2026" FontSize="9" FontFamily="OpenSansSemibold" TextColor="#873600"/>
+                        </Grid>
+                        <Label Text="74% des exploitants maraîchers ne respectent pas le délai d'attente avant récolte. Protégez votre santé, vos reins et celle des familles consommatrices." FontSize="11" TextColor="#5C2B05" LineHeight="1.2"/>
+                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                            <Image Source="ic_check.png" WidthRequest="10" HeightRequest="10" VerticalOptions="Center"/>
+                            <Label Text="Zéro résidu toxique garanti si le délai est scrupuleusement respecté." FontSize="10" TextColor="#873600" FontFamily="OpenSansSemibold" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
                 </Grid>
             </Border>
 
-            <!-- Filter Chips -->
+            <!-- QUICK DOSAGE & DAR INTERACTIVE TOOL HERO CARD -->
+            <Border StrokeShape="RoundRectangle 14" BackgroundColor="White" Stroke="#E4E2E0" StrokeThickness="1" Padding="14">
+                <VerticalStackLayout Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                            <Label Text="OUTIL PRATIQUE TERRAIN" FontSize="9" FontFamily="OpenSansSemibold" TextColor="#1A6D0E" CharacterSpacing="1"/>
+                            <Label Text="Calculateur Pulvérisateur &amp; DAR" FontSize="15" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                            <Label Text="Ajustez le volume et le dosage exact par pulvérisateur à dos de 15L pour éviter le surdosage toxique." FontSize="11" TextColor="#71796F"/>
+                        </VerticalStackLayout>
+                        <Border Grid.Column="1" StrokeShape="RoundRectangle 12" BackgroundColor="#EAF7EE" StrokeThickness="0" WidthRequest="44" HeightRequest="44" VerticalOptions="Center">
+                            <Image Source="ic_spray.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,Auto" BackgroundColor="#F5F3F1" Padding="10,6">
+                        <HorizontalStackLayout Grid.Column="0" Spacing="6" VerticalOptions="Center">
+                            <Label Text="Capacité pulvé standard :" FontSize="11" TextColor="#414940"/>
+                            <Label Text="15 Litres" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#013A13"/>
+                        </HorizontalStackLayout>
+                        <Button Grid.Column="1" Text="Calculer mon dosage" Clicked="OnOpenCalculatorClicked" BackgroundColor="#013A13" TextColor="White" FontSize="11" HeightRequest="34" CornerRadius="8"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- SEARCH & HORIZONTAL FILTER TABS -->
+            <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Stroke="#E4E2E0" StrokeThickness="1" Padding="12,4">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                    <Image Grid.Column="0" Source="ic_search.png" WidthRequest="16" HeightRequest="16" VerticalOptions="Center"/>
+                    <Entry x:Name="SearchProductEntry" Placeholder="Rechercher un intrant, ravageur, matière active..." FontSize="12" TextColor="#013A13" TextChanged="OnSearchTextChanged"/>
+                </Grid>
+            </Border>
+
             <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
-                <HorizontalStackLayout Spacing="8">
-                    <Border StrokeShape="RoundRectangle 14" BackgroundColor="#103723" StrokeThickness="0" Padding="12,6">
-                        <Label Text="Tous (48)" FontSize="11" TextColor="White" FontFamily="OpenSansSemibold"/>
+                <HorizontalStackLayout Spacing="6">
+                    <Border x:Name="TabTous" StrokeShape="RoundRectangle 16" BackgroundColor="#013A13" StrokeThickness="0" Padding="12,6">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSelectCatTous"/>
+                        </Border.GestureRecognizers>
+                        <Label x:Name="LabelTabTous" Text="Tous (4)" FontSize="11" FontFamily="OpenSansSemibold" TextColor="White"/>
                     </Border>
-                    <Border StrokeShape="RoundRectangle 14" BackgroundColor="#EAF1EB" StrokeThickness="0" Padding="12,6">
-                        <Label Text="Fongicides" FontSize="11" TextColor="#103723"/>
+                    <Border x:Name="TabFongicides" StrokeShape="RoundRectangle 16" BackgroundColor="White" Stroke="#E4E2E0" StrokeThickness="1" Padding="10,6">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSelectCatFongicides"/>
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                            <BoxView WidthRequest="8" HeightRequest="8" CornerRadius="4" Color="#E67E22" VerticalOptions="Center"/>
+                            <Label x:Name="LabelTabFongicides" Text="Fongicides" FontSize="11" TextColor="#414940" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
                     </Border>
-                    <Border StrokeShape="RoundRectangle 14" BackgroundColor="#EAF1EB" StrokeThickness="0" Padding="12,6">
-                        <Label Text="Insecticides" FontSize="11" TextColor="#103723"/>
+                    <Border x:Name="TabInsecticides" StrokeShape="RoundRectangle 16" BackgroundColor="White" Stroke="#E4E2E0" StrokeThickness="1" Padding="10,6">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSelectCatInsecticides"/>
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                            <BoxView WidthRequest="8" HeightRequest="8" CornerRadius="4" Color="#BA1A1A" VerticalOptions="Center"/>
+                            <Label x:Name="LabelTabInsecticides" Text="Insecticides" FontSize="11" TextColor="#414940" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
                     </Border>
-                    <Border StrokeShape="RoundRectangle 14" BackgroundColor="#EAF1EB" StrokeThickness="0" Padding="12,6">
-                        <Label Text="Bio / Purin" FontSize="11" TextColor="#103723"/>
+                    <Border x:Name="TabHerbicides" StrokeShape="RoundRectangle 16" BackgroundColor="White" Stroke="#E4E2E0" StrokeThickness="1" Padding="10,6">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSelectCatHerbicides"/>
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                            <BoxView WidthRequest="8" HeightRequest="8" CornerRadius="4" Color="#71796F" VerticalOptions="Center"/>
+                            <Label x:Name="LabelTabHerbicides" Text="Herbicides" FontSize="11" TextColor="#414940" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                    <Border x:Name="TabBio" StrokeShape="RoundRectangle 16" BackgroundColor="White" Stroke="#E4E2E0" StrokeThickness="1" Padding="10,6">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSelectCatBio"/>
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                            <BoxView WidthRequest="8" HeightRequest="8" CornerRadius="4" Color="#27AE60" VerticalOptions="Center"/>
+                            <Label x:Name="LabelTabBio" Text="Engrais bio" FontSize="11" TextColor="#414940" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
                     </Border>
                 </HorizontalStackLayout>
             </ScrollView>
 
-            <Label Text="FICHES INTRANTS HOMOLOGUÉS" FontSize="12" FontFamily="OpenSansSemibold" TextColor="#103723" Margin="0,4,0,0"/>
+            <Label Text="FICHES INTRANTS HOMOLOGUÉS (MINADER)" FontSize="11" FontFamily="OpenSansSemibold" TextColor="#71796F" CharacterSpacing="1"/>
 
-            <!-- Product 1 : Mancozèbe -->
-            <Border StrokeShape="RoundRectangle 14" BackgroundColor="White" Stroke="#E2EAE2" StrokeThickness="1" Padding="14">
-                <VerticalStackLayout Spacing="6">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Grid.Column="0" Text="Mancozèbe / Manèbe 80 WP" FontSize="14" FontFamily="OpenSansSemibold" TextColor="#103723"/>
-                        <Border Grid.Column="1" StrokeShape="RoundRectangle 10" BackgroundColor="#FDF2E9" StrokeThickness="0" Padding="6,3">
-                            <Label Text="DAR : 14 jours" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#D35400"/>
-                        </Border>
-                    </Grid>
-                    <Label Text="Traitement préventif contre le mildiou, rouille et alternariose sur tomate, piment et caféier." FontSize="11" TextColor="#55695C"/>
-                    <HorizontalStackLayout Spacing="16" Margin="0,2,0,0">
-                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
-                            <Image Source="ic_droplet.png" WidthRequest="11" HeightRequest="11" VerticalOptions="Center"/>
-                            <Label Text="150 g / 15 Litres" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#103723"/>
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
-                            <Image Source="ic_alert.png" WidthRequest="11" HeightRequest="11" VerticalOptions="Center"/>
-                            <Label Text="Classe III (Modéré)" FontSize="10" TextColor="#D35400"/>
-                        </HorizontalStackLayout>
-                    </HorizontalStackLayout>
-                    <Button Text="Enregistrer ce traitement sur une parcelle" Clicked="OnOpenCalculatorClicked" BackgroundColor="#F0F5F1" TextColor="#103723" FontSize="11" HeightRequest="34" CornerRadius="17" Margin="0,4,0,0"/>
-                </VerticalStackLayout>
-            </Border>
-
-            <!-- Product 2 : Lambda-cyhalothrine -->
-            <Border StrokeShape="RoundRectangle 14" BackgroundColor="White" Stroke="#E2EAE2" StrokeThickness="1" Padding="14">
-                <VerticalStackLayout Spacing="6">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Grid.Column="0" Text="Lambda-cyhalothrine 50 EC" FontSize="14" FontFamily="OpenSansSemibold" TextColor="#103723"/>
-                        <Border Grid.Column="1" StrokeShape="RoundRectangle 10" BackgroundColor="#FDF2E9" StrokeThickness="0" Padding="6,3">
-                            <Label Text="DAR : 7 jours" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#D35400"/>
-                        </Border>
-                    </Grid>
-                    <Label Text="Contrôle chenilles légionnaires et foreurs de tiges. Pulvériser au coucher du soleil pour les abeilles." FontSize="11" TextColor="#55695C"/>
-                    <HorizontalStackLayout Spacing="16" Margin="0,2,0,0">
-                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
-                            <Image Source="ic_droplet.png" WidthRequest="11" HeightRequest="11" VerticalOptions="Center"/>
-                            <Label Text="15 ml / 15 Litres" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#103723"/>
-                        </HorizontalStackLayout>
-                        <Label Text="Classe II (Élevé)" FontSize="10" TextColor="#C0392B" FontFamily="OpenSansSemibold"/>
-                    </HorizontalStackLayout>
-                </VerticalStackLayout>
-            </Border>
-
-            <!-- Product 3 : Bouillie Bordelaise -->
-            <Border StrokeShape="RoundRectangle 14" BackgroundColor="White" Stroke="#E2EAE2" StrokeThickness="1" Padding="14">
-                <VerticalStackLayout Spacing="6">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Grid.Column="0" Text="Bouillie Bordelaise / Cuivre WP" FontSize="14" FontFamily="OpenSansSemibold" TextColor="#103723"/>
-                        <Border Grid.Column="1" StrokeShape="RoundRectangle 10" BackgroundColor="#E8F8F5" StrokeThickness="0" Padding="6,3">
-                            <Label Text="DAR : 3 jours" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#117A65"/>
-                        </Border>
-                    </Grid>
-                    <Label Text="Sulfate de cuivre neutralisé. Action fongistatique contre la bactériose et cloque. Autorisé bio." FontSize="11" TextColor="#55695C"/>
-                    <HorizontalStackLayout Spacing="16" Margin="0,2,0,0">
-                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
-                            <Image Source="ic_droplet.png" WidthRequest="11" HeightRequest="11" VerticalOptions="Center"/>
-                            <Label Text="120 g / 15 Litres" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#103723"/>
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
-                            <Image Source="ic_leaf.png" WidthRequest="11" HeightRequest="11" VerticalOptions="Center"/>
-                            <Label Text="Agriculture Bio" FontSize="10" TextColor="#27AE60"/>
-                        </HorizontalStackLayout>
-                    </HorizontalStackLayout>
-                </VerticalStackLayout>
-            </Border>
-
-            <!-- Product 4 : Purin d'ortie & Neem -->
-            <Border StrokeShape="RoundRectangle 14" BackgroundColor="White" Stroke="#E2EAE2" StrokeThickness="1" Padding="14">
-                <VerticalStackLayout Spacing="6">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Grid.Column="0" Text="Purin d'ortie &amp; Huile de Neem Bio" FontSize="14" FontFamily="OpenSansSemibold" TextColor="#103723"/>
-                        <Border Grid.Column="1" StrokeShape="RoundRectangle 10" BackgroundColor="#E8F8F5" StrokeThickness="0" Padding="6,3">
-                            <Label Text="DAR : 0 jour" FontSize="10" FontFamily="OpenSansSemibold" TextColor="#117A65"/>
-                        </Border>
-                    </Grid>
-                    <Label Text="Répulsif pucerons et biostimulant foliaire 100% naturel. Zéro danger pour les consommateurs." FontSize="11" TextColor="#55695C"/>
-                </VerticalStackLayout>
-            </Border>
+            <!-- DYNAMIC PRODUCTS CONTAINER -->
+            <VerticalStackLayout x:Name="ProductsContainer" Spacing="12">
+            </VerticalStackLayout>
 
             <!-- EMERGENCY HELPLINE -->
-            <Border StrokeShape="RoundRectangle 16" BackgroundColor="#FDEDEC" Stroke="#F5B7B1" StrokeThickness="1.5" Padding="14">
+            <Border StrokeShape="RoundRectangle 14" BackgroundColor="#FDEDEC" Stroke="#F5B7B1" StrokeThickness="1" Padding="14">
                 <VerticalStackLayout Spacing="8">
                     <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
                         <Image Source="ic_alert.png" WidthRequest="16" HeightRequest="16" VerticalOptions="Center"/>
-                        <Label Text="Urgence Intoxication &amp; Contact Cutané" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#922B21"/>
+                        <Label Text="Urgence Intoxication &amp; Contact Cutané" FontSize="13" FontFamily="OpenSansSemibold" TextColor="#922B21" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
-                    <Label Text="En cas de vertige ou projection oculaire : rincez abondamment à l'eau claire pendant 15 minutes et contactez :" FontSize="11" TextColor="#78281F"/>
-                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,4,0,0">
-                        <Button Grid.Column="0" Text="SAMU : 119" Clicked="OnEmergencyCallClicked" BackgroundColor="#C0392B" TextColor="White" FontSize="11" HeightRequest="36" CornerRadius="18"/>
-                        <Button Grid.Column="1" Text="Centre Anti-poison" Clicked="OnEmergencyCallClicked" BackgroundColor="White" TextColor="#C0392B" BorderColor="#F5B7B1" BorderWidth="1" FontSize="10" HeightRequest="36" CornerRadius="18"/>
+                    <Label Text="En cas de malaise, vertige ou contact oculaire : rincez à l'eau claire pendant 15 minutes et contactez immédiatement :" FontSize="11" TextColor="#78281F"/>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <Button Grid.Column="0" Text="SAMU : 119" Clicked="OnEmergencyCallClicked" BackgroundColor="#C0392B" TextColor="White" FontSize="11" HeightRequest="36" CornerRadius="8"/>
+                        <Button Grid.Column="1" Text="Centre Anti-poison" Clicked="OnEmergencyCallClicked" BackgroundColor="White" TextColor="#C0392B" BorderColor="#F5B7B1" BorderWidth="1" FontSize="11" HeightRequest="36" CornerRadius="8"/>
                     </Grid>
                 </VerticalStackLayout>
             </Border>

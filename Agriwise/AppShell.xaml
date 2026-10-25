@@ -5,13 +5,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:Agriwise.Views"
     Shell.FlyoutBehavior="Disabled"
-    Shell.TabBarBackgroundColor="White"
-    Shell.TabBarForegroundColor="#103723"
-    Shell.TabBarUnselectedColor="#7A8F82"
-    Shell.TabBarTitleColor="#103723"
+    Shell.TabBarBackgroundColor="#FFFFFF"
+    Shell.TabBarForegroundColor="#013A13"
+    Shell.TabBarUnselectedColor="#71796F"
+    Shell.TabBarTitleColor="#013A13"
     Title="AgriWise">
 
-    <!-- Main Navigation TabBar with Professional Icons -->
+    <!-- Professional TabBar with official vector icons -->
     <TabBar>
         <Tab Title="Accueil" Icon="ic_home.png">
             <ShellContent

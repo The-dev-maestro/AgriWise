@@ -20,6 +20,9 @@ public partial class OnboardingPage : ContentPage
 
     private void OnDirectDashboardClicked(object sender, EventArgs e)
     {
-        Application.Current.MainPage = new AppShell();
+        if (Application.Current != null)
+        {
+            Application.Current.MainPage = new AppShell();
+        }
     }
 }
